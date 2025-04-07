@@ -1,0 +1,47 @@
+{% extends 'inventory/base.html' %}
+
+{% block title %}Inventory Items{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col d-flex justify-content-between align-items-center">
+        <h1>Inventory Items</h1>
+        <a href="{% url 'inventory:item-create' %}" class="btn btn-primary">Add Item</a>
+    </div>
+</div>
+
+{% if items %}
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Unit</th>
+                <th>Last Updated</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.unit.abbreviation }}</td>
+                <td>{{ item.updated_at|date:"M d, Y" }}</td>
+                <td>
+                    <div class="btn-group btn-group-sm">
+                        <a href="{% url 'inventory:item-detail' item.id %}" class="btn btn-info">View</a>
+                        <a href="{% url 'inventory:item-update' item.id %}" class="btn btn-warning">Edit</a>
+                        <a href="{% url 'inventory:item-delete' item.id %}" class="btn btn-danger">Delete</a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-info">No inventory items found. <a href="{% url 'inventory:item-create' %}">Add one now</a>.</div>
+{% endif %}
+{% endblock %}
