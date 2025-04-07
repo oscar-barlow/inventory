@@ -7,6 +7,11 @@ A simple web application to manage your home inventory using Django and SQLite.
 - Track inventory items with quantities and units of measure
 - CRUD operations for both inventory items and units of measure
 - Responsive UI using Bootstrap
+- Enhanced database reliability:
+  - Foreign key enforcement enabled (prevents orphaned records)
+  - STRICT table mode enabled (enforces data type constraints)
+  - UUID primary keys (instead of auto-incrementing integers)
+  - NOT NULL constraints on critical fields
 
 ## Installation
 
@@ -79,3 +84,6 @@ A simple web application to manage your home inventory using Django and SQLite.
 - `config/`: Project settings and configuration
 - `tests/`: Test files
   - `test_smoke.py`: Smoke test that verifies migrations apply and the app starts
+  - `test_inventory_constraints.py`: Tests for inventory item database constraints
+  - `test_unit_constraints.py`: Tests for unit of measure database constraints
+  - `test_sqlite_pragmas.py`: Tests for SQLite PRAGMA settings

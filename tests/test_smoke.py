@@ -44,13 +44,17 @@ def test_migrations_apply():
 
 @pytest.fixture(scope="module")
 def django_server():
-    """Fixture to start and stop the Django development server"""
-    # Start the development server on port 8123
+    """Fixture to start and stop the Django development server with test settings"""
+    # Start the development server on port 8123 using test settings
+    env = os.environ.copy()
+    env['DJANGO_SETTINGS_MODULE'] = 'config.test_settings'
+    
     server_process = subprocess.Popen(
         ["python", "manage.py", "runserver", "127.0.0.1:8123", "--noreload"],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         cwd=os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+        env=env,
     )
     
     # Wait for the server to start
