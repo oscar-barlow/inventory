@@ -29,3 +29,11 @@ smoke-test:
 .PHONY: test-watch
 test-watch:
 	poetry run ptw --clear --afterrun "echo '\n\nWatching for changes...'"
+
+.PHONY: docker-build
+docker-build:
+	docker build -t inventory-app:$(TAG) .
+
+.PHONY: docker-run
+docker-run:
+	docker run -p 8000:8000 -v $(shell pwd)/db.sqlite3:/app/db.sqlite3 inventory-app:$(TAG)
